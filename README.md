@@ -1,2 +1,2 @@
-# aai_group2_shoppers_purchasing_intention
+# Online Shoppers Purchasing Intention Dataset
 This project explores various AI/ML models to determine online shoppers purchasing intention
