@@ -1,2 +1,7 @@
 # Online Shoppers Purchasing Intention Dataset
-This project explores various AI/ML models to determine online shoppers purchasing intention
+[
+
+This project uses the Online Shoppers Purchasing Intention Dataset from the UCI Machine Learning Repository, which includes more than twelve thousand user sessions and eighteen behavioral and contextual features. We will use clustering, classification, and deep learning methods to predict whether a shopper will complete a purchase. The process involves cleaning and preparing the data, identifying behavioral patterns through K-Means clustering, and building predictive models such as Logistic Regression, Support Vector Machine, XGBoost, and Multilayer Perceptron. The models will then be compared and combined using a Voting Classifier to achieve the most accurate results. Evaluation will focus on recall and F1-score since these measures are best for understanding model performance on imbalanced data. Overall, this project aims to build a reliable system that can help online retailers better understand their customers and improve conversion rates.
+]
+
+(https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset)
