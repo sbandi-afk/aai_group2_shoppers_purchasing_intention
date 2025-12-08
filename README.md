@@ -1,6 +1,6 @@
 # Online Shoppers Purchasing Intention — Team 2 Final Project
 
-yooutube: https://youtu.be/Kbz0VpzSZkk
+youtube: https://youtu.be/Kbz0VpzSZkk
 
 A complete, reproducible workflow to explore, model, and evaluate purchasing intention using the UCI Online Shoppers Purchasing Intention Dataset. The project covers data cleaning, exploratory analysis, clustering to discover behavior segments, and multiple classification models (Logistic Regression, SVM, Random Forest, XGBoost, and MLP), followed by model comparison and a soft voting ensemble. Evaluation centers on recall and F1 to address class imbalance.
 
@@ -246,4 +246,5 @@ Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In Pr
 Cortes, C., & Vapnik, V. (1995). Support-vector networks. Machine Learning, 20(3), 273-297. https://doi.org/10.1007/BF00994018
 
 MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. In L. M. Le Cam & J. Neyman (Eds.), Proceedings of the fifth Berkeley symposium on mathematical statistics and probability (Vol. 1, pp. 281-297). University of California Press.
+
 
