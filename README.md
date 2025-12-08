@@ -1,49 +1,132 @@
-# Online Shoppers Purchasing Intention — Team 2 Final Project
+# Predicting Online Shoppers Purchasing Intention
 
-youtube: https://youtu.be/Kbz0VpzSZkk
+## Overview
+The rapid expansion of e-commerce has necessitated the development of predictive models
+to understand customer behavior and optimize conversion rates. This project aimed to predict
+the purchasing intention of online shoppers using the "Online Shoppers Purchasing Intention
+Dataset" from the UCI Machine Learning Repository. The study addressed the challenge of a
+highly imbalanced dataset, where only 15.5% of sessions resulted in a transaction. The
+methodology employed a robust pipeline including Exploratory Data Analysis (EDA), feature
+engineering via K-Means clustering, and Synthetic Minority Over-sampling Technique
+(SMOTE) to address class imbalance. Five distinct algorithms—Logistic Regression, Random
+Forest, Support Vector Machine (SVM), XGBoost, and Multilayer Perceptron (MLP)—were
+trained and optimized using GridSearch, a HyperParameter Tuning technique. A Voting
+Classifier ensemble was subsequently developed to aggregate predictions. The Voting
+Classifier achieved the highest stability and performance, yielding an F1-score of 0.66 and an
+Area Under the Curve (ROC-AUC) of 0.89 on the test set. Key findings indicated that
+PageValues and ExitRates were the most significant predictors of revenue. These results
+demonstrate that ensemble learning, combined with unsupervised clustering features,
+provides a reliable framework for real-time prediction of purchasing intention of online
+shoppers.
 
-A complete, reproducible workflow to explore, model, and evaluate purchasing intention using the UCI Online Shoppers Purchasing Intention Dataset. The project covers data cleaning, exploratory analysis, clustering to discover behavior segments, and multiple classification models (Logistic Regression, SVM, Random Forest, XGBoost, and MLP), followed by model comparison and a soft voting ensemble. Evaluation centers on recall and F1 to address class imbalance.
+## Objectives
+- **Predict Purchasing Intention**: Accurately classify whether a shopping session will result in a transaction (Revenue).
+- **Behavioral Analysis**: Use clustering to identify distinct shopper segments based on engagement and activity.
+- **Model Comparison**: Evaluate multiple machine learning algorithms to find the most effective predictor.
+- **Handling Imbalance**: Address the class imbalance inherent in conversion data using appropriate metrics (Recall, F1) and techniques (SMOTE, Class Weights).
 
-Dataset: https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset
+## Methods
+- **Clustering**: K-Means clustering was employed to discover natural groupings of user sessions, revealing high-engagement vs. low-engagement segments.
+- **Classification Models**: The following supervised learning models were trained and tuned:
+  - Logistic Regression in Python
+  - Support Vector Machine (SVM)
+  - Random Forest Classifier
+  - XGBoost Classifier
+  - Multilayer Perceptron (MLP)
+- **Ensemble Learning**: A Soft Voting Classifier combined the top-performing models to improve generalization and robustness.
 
-## Repository contents
-- AAI501_Final_Project_Team2_v6_final.ipynb — main end-to-end notebook (data prep, EDA, clustering, modeling, evaluation)
-- MSAAI-501-Final-Project-Report-Team-2.pdf — written report with results and discussion
-- README.md — this project overview and usage guide
+## Data Preparation
+- **Source**: [UCI Online Shoppers Purchasing Intention Dataset](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset).
+- **Cleaning**: Checked for and removed duplicate sessions. Verified no missing values were present.
+- **Feature Engineering**:
+  - **Encoding**: Categorical variables (e.g., Month, VisitorType) were transformed using One-Hot Encoding.
+  - **Scaling**: Numeric features (e.g., Duration, PageValues) were standardized using StandardScaler.
+  - **Imbalance Handling**: SMOTE (Synthetic Minority Over-sampling Technique) and class weighting strategies were used to support training on the minority class (Revenue=True).
+  - Key features include:
+    - Session behavior: Administrative, Informational, ProductRelated and durations
+    - Engagement: PageValues, SpecialDay
+    - Technical: Browser, OperatingSystems, Region, TrafficType
+    - Temporal: Month, Weekend
+    - Target: Revenue (boolean)
 
-## Project description
-Predict whether an online shopping session results in a purchase (Revenue = True) from behavioral and contextual features across 12,330 sessions. We handle mixed numeric/categorical data, class imbalance, and evaluate multiple models. Clustering is used to uncover behavioral segments linked to conversion.
+## Exploratory Data Analysis
+- **Univariate Analysis**: Histograms and distributions for features like `PageValues`, `ExitRates`, and session durations.
+- **Bivariate Analysis**: Stacked bar charts showing conversion rates across different Categories (Month, TrafficType).
+- **Correlation**: Heatmaps revealed strong positive correlations between `PageValues` and Revenue, and negative correlations with `ExitRates`.
+- **Seasonality**: Observed higher traffic and conversion rates in months like November and May.
 
-Key features include:
-- Session behavior: Administrative, Informational, ProductRelated and durations
-- Engagement: PageValues, SpecialDay
-- Technical: Browser, OperatingSystems, Region, TrafficType
-- Temporal: Month, Weekend
-- Target: Revenue (boolean)
+## Results
+The models were evaluated on a held-out test set. The **Soft Voting Classifier** provided the best overall balance of F1-score and accuracy.
 
-## Setup / installation
-Tested with Python 3.10+ on Windows.
+| Model | Recall | Precision | F1 Score | Accuracy |
+| :--- | :--- | :--- | :--- | :--- |
+| **Voting Classifier (Soft)** | **0.7749** | **0.5759** | **0.6607** | **0.8754** |
+| MLP Classifier | 0.8377 | 0.5229 | 0.6439 | 0.8549 |
+| SVC | 0.7644 | 0.5489 | 0.6390 | 0.8648 |
+| Logistic Regression | 0.7277 | 0.5673 | 0.6376 | 0.8705 |
+| Random Forest | 0.7330 | 0.5556 | 0.6321 | 0.8664 |
+| XGBoost | 0.6649 | 0.5546 | 0.6048 | 0.8639 |
 
-```
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -U pip
-pip install jupyter numpy pandas scikit-learn xgboost matplotlib seaborn imbalanced-learn
-```
-Optional:
-- JupyterLab: `pip install jupyterlab`
-- If your platform needs a specific xgboost: `pip install xgboost==1.7.6`
+## Analysis
 
-## Usage
-Open and run the notebook end-to-end:
+## Repository Structure
+- `AAI501_Final_Project_Team2_v6_final.ipynb`: The primary Jupyter Notebook containing the full end-to-end workflow (Data Loading, EDA, Modeling, Evaluation).
+- `MSAAI-501-Final-Project-Report-Team-2-final.pdf`: The comprehensive project report detailing methodology, experiments, and conclusions.
+- `README.md`: This file, providing an overview and guide to the project.
+
+## How to Run
+### Prerequisites
+Ensure you have Python 3.10+ installed. Install the required dependencies:
 
 ```bash
-jupyter notebook AAI501_Final_Project_Team2_v6_final.ipynb
+pip install jupyter numpy pandas scikit-learn xgboost matplotlib seaborn imbalanced-learn ucimlrepo
 ```
 
-- Run cells in order. The notebook downloads or loads the UCI dataset, preprocesses, trains models, and reports metrics.
-- Keep the provided random_state values and stratified splits to reproduce results.
-- Outputs include plots (EDA, clustering, ROC/PR curves, confusion matrices) and printed metric tables.
+### Execution
+1.  Clone this repository.
+2.  Navigate to the project directory.
+3.  Launch Jupyter Notebook:
+    ```bash
+    jupyter notebook AAI501_Final_Project_Team2_v6_final.ipynb
+    ```
+4.  Run all cells sequentially to reproduce the analysis and results.
+
+
+## Dependencies
+- Python 3.10+
+- jupyter
+- numpy
+- pandas
+- scikit-learn
+- xgboost
+- matplotlib
+- seaborn
+- imbalanced-learn
+
+If you need exact versions, capture your environment with:
+```
+pip freeze > requirements.txt
+```
+
+## References
+
+Sakar, C.O., Polat, S., Katircioglu, H.K., & Korkmaz, S. (2018). Online Shoppers Purchasing Intention Dataset. UCI Machine Learning Repository. https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset
+
+Abdullah-All-Tanvir, Khandokar, I. A., Islam, A. M., Islam, S., & Shatabda, S. (2023). A gradient boosting classifier for purchase intention prediction of online shoppers. Heliyon, 9(4), e15163. https://doi.org/10.1016/j.heliyon.2023.e15163
+
+Adhikari, J. (2023). Online shoppers' purchase intention using ensemble learning approach. International Journal of Next-Generation Computing, 14(4). https://doi.org/10.47164/ijngc.v14i4.1065
+
+Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). SMOTE: Synthetic minority over-sampling technique. Journal of Artificial Intelligence Research, 16, 321-357. https://doi.org/10.1613/jair.953
+
+Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794). ACM. https://doi.org/10.1145/2939672.2939785
+
+Cortes, C., & Vapnik, V. (1995). Support-vector networks. Machine Learning, 20(3), 273-297. https://doi.org/10.1007/BF00994018
+
+MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. In L. M. Le Cam & J. Neyman (Eds.), Proceedings of the fifth Berkeley symposium on mathematical statistics and probability (Vol. 1, pp. 281-297). University of California Press.
+
+## Appendix
+
+## YouTube Link : https://youtu.be/Kbz0VpzSZkk
 
 ## Notebook highlights
 - Introduction and objectives
@@ -87,20 +170,6 @@ jupyter notebook AAI501_Final_Project_Team2_v6_final.ipynb
   - Report on held-out test: Recall, Precision, F1, ROC-AUC, Balanced Accuracy, Accuracy
   - Produce confusion matrices and optionally calibration curves
 
-## Results
-
-- Voting Classifier (soft):
-  - Recall: 0.7749, Precision: 0.5759, F1: 0.6607, ROC-AUC: 0.8892, Balanced Acc: 0.8345, Accuracy: 0.8754
-- MLPClassifier:
-  - Recall: 0.8377, Precision: 0.5229, F1: 0.6439, ROC-AUC: 0.8880, Balanced Acc: 0.8479, Accuracy: 0.8549
-- SVC:
-  - Recall: 0.7644, Precision: 0.5489, F1: 0.6390, ROC-AUC: 0.8576, Balanced Acc: 0.8239, Accuracy: 0.8648
-- Logistic Regression:
-  - Recall: 0.7277, Precision: 0.5673, F1: 0.6376, ROC-AUC: 0.8806, Balanced Acc: 0.8124, Accuracy: 0.8705
-- RandomForestClassifier:
-  - Recall: 0.7330, Precision: 0.5556, F1: 0.6321, ROC-AUC: 0.8796, Balanced Acc: 0.8121, Accuracy: 0.8664
-- XGBClassifier:
-  - Recall: 0.6649, Precision: 0.5546, F1: 0.6048, ROC-AUC: 0.8517, Balanced Acc: 0.7829, Accuracy: 0.8639
 
 ### Observations from analysis
 - Class imbalance and thresholding
@@ -127,124 +196,8 @@ jupyter notebook AAI501_Final_Project_Team2_v6_final.ipynb
   - Target high-engagement clusters with timely nudges (cart reminders, discounts), especially on weekends and high-PageValue sessions.
   - Reduce ExitRates by surfacing checkout CTAs earlier for mid-engagement users.
 
-## Implementation details
-Based on searching the notebook source, we found these exact configurations:
-- Preprocessing
-  - ColumnTransformer with:
-    - OneHotEncoder(drop='first', handle_unknown='ignore') applied to categorical columns (Browser, OperatingSystems, Region, TrafficType, Month, VisitorType, Weekend)
-    - StandardScaler() applied to numeric columns (Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues, SpecialDay)
-  - Fit on training only; transform validation/test to avoid leakage
-- Clustering and visualization
-  - KMeans on scaled numeric/categorical-encoded features; k chosen via elbow and silhouette
-  - t-SNE used for 2D visualization of clusters
-- Models (constructors used before tuning)
-  - LogisticRegression(max_iter=1000, solver='liblinear')
-  - SVC(probability=True, random_state=42)
-  - RandomForestClassifier() with class_weight candidates ['balanced', 'balanced_subsample'] explored during search
-  - XGBClassifier(use_label_encoder=False, eval_metric='logloss')
-  - MLPClassifier(max_iter=500, random_state=42, early_stopping=True, validation_fraction=0.1, n_iter_no_change=20)
-- Hyperparameter search
-  - Per-model GridSearchCV/RandomizedSearchCV; final models re-instantiated with Best Parameters and refit
-- Ensemble
-  - VotingClassifier(estimators=best_estimators_list, voting='soft') combining the tuned top models
-
-## Key code snippets
-- ColumnTransformer (encode + scale)
-```python
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.pipeline import Pipeline
-
-categorical_pipeline = Pipeline([
-    ('encoder', OneHotEncoder(drop='first', handle_unknown='ignore'))
-])
-numeric_pipeline = Pipeline([
-    ('scaler', StandardScaler())
-])
-preprocessor = ColumnTransformer([
-    ('num', numeric_pipeline, num_cols),
-    ('cat', categorical_pipeline, cat_cols)
-])
-```
-
-- KMeans and t-SNE visualization
-```python
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-from sklearn.manifold import TSNE
-
-# choose k via elbow/silhouette
-inertias, silhouettes = [], []
-for k in range(2, 10):
-    km = KMeans(n_clusters=k, random_state=42)
-    labels = km.fit_predict(X_scaled)
-    inertias.append(km.inertia_)
-    silhouettes.append(silhouette_score(X_scaled, labels))
-
-# t-SNE for 2D visualization
-tsne = TSNE(n_components=2, random_state=42, perplexity=30)
-emb = tsne.fit_transform(X_scaled)
-```
-
-- Model search and ensemble
-```python
-from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import VotingClassifier
-
-models = [
-    { 'name': 'LogisticRegression', 'model': LogisticRegression(max_iter=1000, solver='liblinear'), 'param_grid': {...} },
-    { 'name': 'SVC', 'model': SVC(probability=True, random_state=42), 'param_grid': {...} },
-    { 'name': 'RandomForestClassifier', 'model': RandomForestClassifier(), 'param_grid': {...} },
-    { 'name': 'XGBClassifier', 'model': XGBClassifier(use_label_encoder=False, eval_metric='logloss'), 'param_grid': {...} },
-    { 'name': 'MLPClassifier', 'model': MLPClassifier(max_iter=500, random_state=42, early_stopping=True, validation_fraction=0.1, n_iter_no_change=20), 'param_grid': {...} },
-]
-# Fit CV per model, collect best estimators
-voting_clf = VotingClassifier(estimators=best_estimators_list, voting='soft')
-```
-
-- Threshold tuning on validation set (optimize F1/recall)
-```python
-from sklearn.metrics import precision_recall_curve, f1_score
-
-proba = model.predict_proba(X_val)[:, 1]
-prec, rec, th = precision_recall_curve(y_val, proba)
-# choose threshold by best F1
-best_idx = max(range(len(th)), key=lambda i: f1_score(y_val, (proba >= th[i]).astype(int)))
-best_threshold = th[best_idx]
-```
-
-## Dependencies
-- Python 3.10+
-- jupyter
-- numpy
-- pandas
-- scikit-learn
-- xgboost
-- matplotlib
-- seaborn
-- imbalanced-learn
-
-If you need exact versions, capture your environment with:
-```
-pip freeze > requirements.txt
-```
-
 ## License
 No explicit license is included in the notebook. Code here is for academic purposes. Refer to the UCI dataset license for data usage terms.
 
-## Citation
-Sakar, C.O., Polat, S., Katircioglu, H.K., & Korkmaz, S. (2018). Online Shoppers Purchasing Intention Dataset. UCI Machine Learning Repository. https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset
-
-Abdullah-All-Tanvir, Khandokar, I. A., Islam, A. M., Islam, S., & Shatabda, S. (2023). A gradient boosting classifier for purchase intention prediction of online shoppers. Heliyon, 9(4), e15163. https://doi.org/10.1016/j.heliyon.2023.e15163
-
-Adhikari, J. (2023). Online shoppers' purchase intention using ensemble learning approach. International Journal of Next-Generation Computing, 14(4). https://doi.org/10.47164/ijngc.v14i4.1065
-
-Chawla, N. V., Bowyer, K. W., Hall, L. O., & Kegelmeyer, W. P. (2002). SMOTE: Synthetic minority over-sampling technique. Journal of Artificial Intelligence Research, 16, 321-357. https://doi.org/10.1613/jair.953
-
-Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794). ACM. https://doi.org/10.1145/2939672.2939785
-
-Cortes, C., & Vapnik, V. (1995). Support-vector networks. Machine Learning, 20(3), 273-297. https://doi.org/10.1007/BF00994018
-
-MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. In L. M. Le Cam & J. Neyman (Eds.), Proceedings of the fifth Berkeley symposium on mathematical statistics and probability (Vol. 1, pp. 281-297). University of California Press.
 
 
